@@ -8,48 +8,62 @@
 
 import UIKit
 import AFNetworking
+import MBProgressHUD
 
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
 
     @IBOutlet weak var tableView: UITableView!
     var movies: [NSDictionary]? //if the api is down, the movie list can be nil
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(refreshControl:)), for: UIControlEvents.valueChanged)
+        
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.insertSubview(refreshControl, at: 0)
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
         let request = URLRequest(url: url)
-
+        
         let session = URLSession(
             configuration: URLSessionConfiguration.default,
             delegate: nil,
             delegateQueue: OperationQueue.main
         )
-
+        
+        // Display HUD right before the request is made
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        
         let task: URLSessionDataTask =
             session.dataTask(
-            with: request,
-            completionHandler: {
-                (dataOrNil, response, error) in
+                with: request,
+                completionHandler: {
+                    (dataOrNil, response, error) in
+                    
+                    //Hide HUD once the network request comes back (must be done on main UI thread)
+                    //MBProgressHUD.hide(for: self.view, animated: true)
+                    
                     if let data = dataOrNil {
                         if let responseDictionary = try! JSONSerialization.jsonObject(
                             with: data, options: []) as? NSDictionary {
-                                //NSLog("reponse: \(responseDictionary)")
-                                self.movies = responseDictionary["results"] as? [NSDictionary]
-                                self.tableView.reloadData()
-                            }
+                            
+                            MBProgressHUD.hide(for: self.view, animated: true)
+                            
+                            self.movies = responseDictionary["results"] as? [NSDictionary]
+                            self.tableView.reloadData()
+                        }
                     }
             }
         )
         
         task.resume()
-
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,15 +89,54 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         let base_url = "https://image.tmdb.org/t/p/w500"
         let file_path = movie["poster_path"] as! String
-        let image_url = NSURL(string: base_url + file_path)
+        let image_url = URL(string: base_url + file_path)
         
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
-        cell.posterView.setImageWith(image_url as! URL)
+        cell.posterView.setImageWith(image_url!)
         
         //cell.textLabel!.text = title
         //print("row \(indexPath.row)")
         return cell
+    }
+    
+    
+    func refreshControlAction(refreshControl: UIRefreshControl) {
+        
+        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
+        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
+        let request = URLRequest(url: url)
+
+        
+        // Configure session so that completion handler is executed on main UI thread
+        let session = URLSession(
+            configuration: URLSessionConfiguration.default,
+            delegate: nil,
+            delegateQueue: OperationQueue.main
+        )
+        
+        let task : URLSessionDataTask =
+            session.dataTask(
+                with: request,
+                completionHandler: { (dataOrNil, response, error) in
+                    
+                    // ... Use the new data to update the data source ...
+                    if let data = dataOrNil {
+                        if let responseDictionary = try! JSONSerialization.jsonObject(
+                            with: data, options: []) as? NSDictionary {
+                            
+                            //MBProgressHUD.hide(for: self.view, animated: true)
+                            
+                            self.movies = responseDictionary["results"] as? [NSDictionary]
+                            self.tableView.reloadData()
+                            refreshControl.endRefreshing()
+
+                        }
+                    }
+                    
+                }
+        )
+        task.resume()
     }
     
 

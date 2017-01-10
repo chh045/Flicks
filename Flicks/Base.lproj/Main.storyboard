@@ -71,7 +71,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="egW-47-jyD" appends="YES" id="SEM-XS-4vy"/>
+                                    <outletCollection property="gestureRecognizers" destination="3li-Ky-PZK" appends="YES" id="dBs-L7-OzC"/>
                                 </connections>
                             </label>
                         </subviews>
@@ -92,9 +92,9 @@
                         <action selector="onTap:" destination="BYZ-38-t0r" id="amx-iS-yO1"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="egW-47-jyD" userLabel="tapNetworkErrorBar">
+                <tapGestureRecognizer id="3li-Ky-PZK" userLabel="tapNetworkErrorLabel">
                     <connections>
-                        <action selector="soso:" destination="BYZ-38-t0r" id="KJc-5v-ajD"/>
+                        <action selector="tapNetworkErrorLabelAction:" destination="BYZ-38-t0r" id="lkK-Ne-5jU"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

@@ -33,49 +33,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         networkErrorLabel.isHidden = true
         networkErrorLabel.isUserInteractionEnabled = true
         
-        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
-        let request = URLRequest(url: url)
-        
-        let session = URLSession(
-            configuration: URLSessionConfiguration.default,
-            delegate: nil,
-            delegateQueue: OperationQueue.main
-        )
-        
-        // Display HUD right before the request is made
-        MBProgressHUD.showAdded(to: self.view, animated: true)
-        
-        let task: URLSessionDataTask =
-            session.dataTask(
-                with: request,
-                completionHandler: {
-                    (dataOrNil, response, error) in
-                    
-                    //Hide HUD once the network request comes back (must be done on main UI thread)
-                    //MBProgressHUD.hide(for: self.view, animated: true)
-                    
-                    if let data = dataOrNil {
-                        if let responseDictionary = try! JSONSerialization.jsonObject(
-                            with: data, options: []) as? NSDictionary {
-                            
-                           
-                            
-                            self.movies = responseDictionary["results"] as? [NSDictionary]
-                            self.tableView.reloadData()
-                        }
-                        else {
-                            self.networkErrorLabel.isHidden = false
-                        }
-                    }
-                    else {
-                        self.networkErrorLabel.isHidden = false
-                    }
-            }
-        )
-        MBProgressHUD.hide(for: self.view, animated: true)
-        
-        task.resume()
+        updateMovie()
         
     }
 
@@ -113,6 +71,52 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         return cell
     }
     
+    func updateMovie() {
+        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
+        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
+        let request = URLRequest(url: url)
+        
+        let session = URLSession(
+            configuration: URLSessionConfiguration.default,
+            delegate: nil,
+            delegateQueue: OperationQueue.main
+        )
+        
+        // Display HUD right before the request is made
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        
+        let task: URLSessionDataTask =
+            session.dataTask(
+                with: request,
+                completionHandler: {
+                    (dataOrNil, response, error) in
+                    
+                    //Hide HUD once the network request comes back (must be done on main UI thread)
+                    //MBProgressHUD.hide(for: self.view, animated: true)
+                    
+                    if let data = dataOrNil {
+                        if let responseDictionary = try! JSONSerialization.jsonObject(
+                            with: data, options: []) as? NSDictionary {
+                            
+                            
+                            self.networkErrorLabel.isHidden = true
+                            self.movies = responseDictionary["results"] as? [NSDictionary]
+                            self.tableView.reloadData()
+                        }
+                        else {
+                            self.networkErrorLabel.isHidden = false
+                        }
+                    }
+                    else {
+                        self.networkErrorLabel.isHidden = false
+                    }
+            }
+        )
+        MBProgressHUD.hide(for: self.view, animated: true)
+        
+        task.resume()
+    }
+    
     
     func refreshControlAction(refreshControl: UIRefreshControl) {
         
@@ -138,8 +142,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                         if let responseDictionary = try! JSONSerialization.jsonObject(
                             with: data, options: []) as? NSDictionary {
                             
-                            //MBProgressHUD.hide(for: self.view, animated: true)
-                            
+                            self.networkErrorLabel.isHidden = true
                             self.movies = responseDictionary["results"] as? [NSDictionary]
                             self.tableView.reloadData()
                             refreshControl.endRefreshing()
@@ -156,10 +159,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         view.endEditing(true)
     }
     
-    @IBAction func tapNetworkErrorLabel(_ sender: Any) {
-        
-        print("hello")
+    @IBAction func tapNetworkErrorLabelAction(_ sender: Any) {
+        updateMovie()
     }
+
 
 
     /*

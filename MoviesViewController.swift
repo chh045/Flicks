@@ -13,6 +13,10 @@ import MBProgressHUD
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var networkErrorLabel: UILabel!
+    
+    
+    
     var movies: [NSDictionary]? //if the api is down, the movie list can be nil
 
     
@@ -26,6 +30,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.dataSource = self
         tableView.delegate = self
         tableView.insertSubview(refreshControl, at: 0)
+        networkErrorLabel.isHidden = true
+        networkErrorLabel.isUserInteractionEnabled = true
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
@@ -53,14 +59,21 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                         if let responseDictionary = try! JSONSerialization.jsonObject(
                             with: data, options: []) as? NSDictionary {
                             
-                            MBProgressHUD.hide(for: self.view, animated: true)
+                           
                             
                             self.movies = responseDictionary["results"] as? [NSDictionary]
                             self.tableView.reloadData()
                         }
+                        else {
+                            self.networkErrorLabel.isHidden = false
+                        }
+                    }
+                    else {
+                        self.networkErrorLabel.isHidden = false
                     }
             }
         )
+        MBProgressHUD.hide(for: self.view, animated: true)
         
         task.resume()
         
@@ -139,6 +152,15 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         task.resume()
     }
     
+    @IBAction func onTap(_ sender: Any) {
+        view.endEditing(true)
+    }
+    
+    @IBAction func tapNetworkErrorLabel(_ sender: Any) {
+        
+        print("hello")
+    }
+
 
     /*
     // MARK: - Navigation

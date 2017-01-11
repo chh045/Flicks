@@ -10,14 +10,15 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
 
-class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
+class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate{
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var networkErrorLabel: UILabel!
-    
-    
+    @IBOutlet weak var movieSearchBar: UISearchBar!
     
     var movies: [NSDictionary]? //if the api is down, the movie list can be nil
+    
+    var filteredMovies: [NSDictionary]!
 
     
     override func viewDidLoad() {
@@ -29,6 +30,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         tableView.dataSource = self
         tableView.delegate = self
+        movieSearchBar.delegate = self
         tableView.insertSubview(refreshControl, at: 0)
         networkErrorLabel.isHidden = true
         networkErrorLabel.isUserInteractionEnabled = true
@@ -43,8 +45,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let movies = movies {
-            return movies.count
+        if ((filteredMovies) != nil) {
+            return filteredMovies.count
         } else {
             return 0
         }
@@ -53,7 +55,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
         
-        let movie = movies![indexPath.row]
+        let movie = filteredMovies![indexPath.row]
         
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
@@ -64,6 +66,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
+
         cell.posterView.setImageWith(image_url!)
         
         //cell.textLabel!.text = title
@@ -98,21 +101,28 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                         if let responseDictionary = try! JSONSerialization.jsonObject(
                             with: data, options: []) as? NSDictionary {
                             
+                            MBProgressHUD.hide(for: self.view, animated: true)
                             
                             self.networkErrorLabel.isHidden = true
                             self.movies = responseDictionary["results"] as? [NSDictionary]
+                            
+                            self.filteredMovies = self.movies
+                            
+                            
                             self.tableView.reloadData()
                         }
                         else {
+                            MBProgressHUD.hide(for: self.view, animated: true)
                             self.networkErrorLabel.isHidden = false
+                            
                         }
                     }
                     else {
+                        MBProgressHUD.hide(for: self.view, animated: true)
                         self.networkErrorLabel.isHidden = false
                     }
             }
         )
-        MBProgressHUD.hide(for: self.view, animated: true)
         
         task.resume()
     }
@@ -155,11 +165,38 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         task.resume()
     }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+
+        
+        guard let movies = self.movies else {
+            return
+        }
+        
+        filteredMovies = searchText.isEmpty ? movies : movies.filter({(movie : NSDictionary) -> Bool in
+            let title = movie["title"] as! String
+            return title.range(of: searchText, options: .caseInsensitive) != nil
+        })
+            
+        /*
+        if let movies = movies{
+            filteredMovies = searchText.isEmpty ? movies : movies.filter({(movie : NSDictionary) -> Bool in
+                let title = movie["title"] as! String
+                return title.range(of: searchText, options: .caseInsensitive) != nil
+            })
+            
+        }*/
+        
+        
+        tableView.reloadData()
+    }
+    
     @IBAction func onTap(_ sender: Any) {
         view.endEditing(true)
     }
     
     @IBAction func tapNetworkErrorLabelAction(_ sender: Any) {
+        
+        self.networkErrorLabel.isHidden = true
         updateMovie()
     }
 

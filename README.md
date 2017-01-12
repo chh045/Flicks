@@ -15,11 +15,11 @@ The following **required** functionality is complete:
 
 The following **optional** features are implemented:
 
-- [ ] User sees an error message when there's a networking error.
+- [✔️] User sees an error message when there's a networking error.
 - [ ] Movies are displayed using a CollectionView instead of a TableView.
-- [ ] User can search for a movie.
+- [✔️] User can search for a movie.
 - [ ] All images fade in as they are loading.
-- [ ] Customize the UI.
+- [✔️] Customize the UI.
 
 The following **additional** features are implemented:
 
@@ -27,14 +27,15 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. 
-2. 
+1. UISearchBar delegation provides great convience for programmers to deal with the on tap action of displaying the keyboard and responses. However we are capabale of customizing the way we want with the keyboard by calling the optionals.
+
+2. To prevent optional varibales cause crashes, we can also use "Guard". However the usage of '!' and '?' requires more various examples and practices. 
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='walkThrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='walkThrough_2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

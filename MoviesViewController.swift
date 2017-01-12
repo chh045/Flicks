@@ -176,15 +176,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             let title = movie["title"] as! String
             return title.range(of: searchText, options: .caseInsensitive) != nil
         })
-            
-        /*
-        if let movies = movies{
-            filteredMovies = searchText.isEmpty ? movies : movies.filter({(movie : NSDictionary) -> Bool in
-                let title = movie["title"] as! String
-                return title.range(of: searchText, options: .caseInsensitive) != nil
-            })
-            
-        }*/
         
         
         tableView.reloadData()

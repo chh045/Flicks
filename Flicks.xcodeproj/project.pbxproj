@@ -14,6 +14,7 @@
 		B7433C911E22D79800B2ADBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7433C8F1E22D79800B2ADBD /* LaunchScreen.storyboard */; };
 		B7433CB51E23019500B2ADBD /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7433CB41E23019500B2ADBD /* MoviesViewController.swift */; };
 		B7433CBB1E231B6200B2ADBD /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7433CBA1E231B6200B2ADBD /* MovieCell.swift */; };
+		B7F854321E25C52F0045F529 /* MovieCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F854311E25C52F0045F529 /* MovieCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		B7433CA21E22D79800B2ADBD /* FlicksUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlicksUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7433CB41E23019500B2ADBD /* MoviesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoviesViewController.swift; path = ../MoviesViewController.swift; sourceTree = "<group>"; };
 		B7433CBA1E231B6200B2ADBD /* MovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		B7F854311E25C52F0045F529 /* MovieCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewController.swift; sourceTree = "<group>"; };
 		CD1E244D4A442B139D8C7D4B /* Pods_Flicks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flicks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				B7433CB41E23019500B2ADBD /* MoviesViewController.swift */,
+				B7F854311E25C52F0045F529 /* MovieCollectionViewController.swift */,
 			);
 			name = "View controllers";
 			sourceTree = "<group>";
@@ -320,7 +323,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -331,6 +334,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7433C871E22D79800B2ADBD /* AppDelegate.swift in Sources */,
+				B7F854321E25C52F0045F529 /* MovieCollectionViewController.swift in Sources */,
 				B7433CB51E23019500B2ADBD /* MoviesViewController.swift in Sources */,
 				B7433CBB1E231B6200B2ADBD /* MovieCell.swift in Sources */,
 			);

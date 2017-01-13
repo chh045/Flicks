@@ -19,6 +19,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     var movies: [NSDictionary]? //if the api is down, the movie list can be nil
     
     var filteredMovies: [NSDictionary]!
+    
+    var endpoint: String!
 
     
     override func viewDidLoad() {
@@ -57,17 +59,21 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         let movie = filteredMovies![indexPath.row]
         
-        let title = movie["title"] as! String
-        let overview = movie["overview"] as! String
+        let title = movie["title"] as? String
+        let overview = movie["overview"] as? String
         
         let base_url = "https://image.tmdb.org/t/p/w500"
-        let file_path = movie["poster_path"] as! String
-        let image_url = URL(string: base_url + file_path)
+        if let file_path = movie["poster_path"] as? String{
+            let image_url = URL(string: base_url + file_path)
+            cell.posterView.setImageWith(image_url!)
+        }
+        
         
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
+        //cell.selectionStyle = .none
 
-        cell.posterView.setImageWith(image_url!)
+
         
         //cell.textLabel!.text = title
         //print("row \(indexPath.row)")
@@ -76,7 +82,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     func updateMovie() {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)")!
         let request = URLRequest(url: url)
         
         let session = URLSession(
@@ -131,7 +137,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     func refreshControlAction(refreshControl: UIRefreshControl) {
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)")!
         let request = URLRequest(url: url)
 
         
@@ -191,16 +197,28 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         updateMovie()
     }
 
-
-
+    
+    override func prepare(for segue: UIStoryboardSegue , sender: Any?) {
+        
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)
+        let movie = movies![indexPath!.row]
+        let detailViewController = segue.destination as! DetailViewController
+        
+        detailViewController.movie = movie
+        cell.isSelected = false
+    }
+    
+    
     /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-    }
-    */
+        print("prepare for segue called")
+    }*/
+ 
 
 }

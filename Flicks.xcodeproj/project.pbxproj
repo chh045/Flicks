@@ -15,6 +15,7 @@
 		B7433CB51E23019500B2ADBD /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7433CB41E23019500B2ADBD /* MoviesViewController.swift */; };
 		B7433CBB1E231B6200B2ADBD /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7433CBA1E231B6200B2ADBD /* MovieCell.swift */; };
 		B7F854321E25C52F0045F529 /* MovieCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F854311E25C52F0045F529 /* MovieCollectionViewController.swift */; };
+		B7F8545A1E2854C00045F529 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F854591E2854C00045F529 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		B7433CB41E23019500B2ADBD /* MoviesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MoviesViewController.swift; path = ../MoviesViewController.swift; sourceTree = "<group>"; };
 		B7433CBA1E231B6200B2ADBD /* MovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		B7F854311E25C52F0045F529 /* MovieCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewController.swift; sourceTree = "<group>"; };
+		B7F854591E2854C00045F529 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		CD1E244D4A442B139D8C7D4B /* Pods_Flicks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flicks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -116,6 +118,7 @@
 			children = (
 				B7433CB41E23019500B2ADBD /* MoviesViewController.swift */,
 				B7F854311E25C52F0045F529 /* MovieCollectionViewController.swift */,
+				B7F854591E2854C00045F529 /* DetailViewController.swift */,
 			);
 			name = "View controllers";
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 			files = (
 				B7433C871E22D79800B2ADBD /* AppDelegate.swift in Sources */,
 				B7F854321E25C52F0045F529 /* MovieCollectionViewController.swift in Sources */,
+				B7F8545A1E2854C00045F529 /* DetailViewController.swift in Sources */,
 				B7433CB51E23019500B2ADBD /* MoviesViewController.swift in Sources */,
 				B7433CBB1E231B6200B2ADBD /* MovieCell.swift in Sources */,
 			);

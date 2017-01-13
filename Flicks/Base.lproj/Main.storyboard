@@ -27,11 +27,11 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieCell" rowHeight="124" id="0Cu-V6-8Ke" customClass="MovieCell" customModule="Flicks" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MovieCell" rowHeight="124" id="0Cu-V6-8Ke" customClass="MovieCell" customModule="Flicks" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="72" width="375" height="124"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Cu-V6-8Ke" id="nJ8-fx-Z2B">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="123"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="123"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ey8-qy-lse">
@@ -58,6 +58,7 @@
                                             <outlet property="overviewLabel" destination="t6N-I6-2cJ" id="OAp-bs-fJN"/>
                                             <outlet property="posterView" destination="SVu-Bt-3xz" id="uzW-RO-hUn"/>
                                             <outlet property="titleLabel" destination="ey8-qy-lse" id="HDw-Ha-X6D"/>
+                                            <segue destination="U0H-Ea-EHB" kind="push" id="vbI-Cm-rdu"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -89,7 +90,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="aTQ-py-p0N" userLabel="tapTableView">
+                <tapGestureRecognizer enabled="NO" id="aTQ-py-p0N" userLabel="tapTableView">
                     <connections>
                         <action selector="onTap:" destination="BYZ-38-t0r" id="amx-iS-yO1"/>
                     </connections>
@@ -102,10 +103,65 @@
             </objects>
             <point key="canvasLocation" x="705" y="-265"/>
         </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="FoJ-o7-wsA">
+            <objects>
+                <viewController id="U0H-Ea-EHB" customClass="DetailViewController" customModule="Flicks" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="q6X-uQ-IhE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="9rK-GJ-WEj">
+                                <rect key="frame" x="0.0" y="27" width="375" height="613"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" id="gp9-gx-5V7">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view alpha="0.69999999999999996" contentMode="scaleToFill" misplaced="YES" id="q8g-1W-aca">
+                                        <rect key="frame" x="16" y="529" width="345" height="188"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dTi-N2-VQa">
+                                                <rect key="frame" x="8" y="8" width="329" height="50"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dB7-4Z-Uss">
+                                                <rect key="frame" x="8" y="66" width="329" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="J2u-mF-qLb"/>
+                    <connections>
+                        <outlet property="detailView" destination="q8g-1W-aca" id="GIr-AG-A0m"/>
+                        <outlet property="overviewLabel" destination="dB7-4Z-Uss" id="xaT-B8-Ne1"/>
+                        <outlet property="posterImageView" destination="9rK-GJ-WEj" id="mSB-mg-ATi"/>
+                        <outlet property="scrollView" destination="gp9-gx-5V7" id="3uE-mh-QkO"/>
+                        <outlet property="titleLabel" destination="dTi-N2-VQa" id="F16-IZ-ecj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gkC-U1-aEm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1280.5" y="-265.5"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="YPq-V6-opA">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="LC1-m1-Ibi" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MoviesNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="LC1-m1-Ibi" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="OGa-lp-t6E">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
